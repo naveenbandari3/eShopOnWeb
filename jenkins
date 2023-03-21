@@ -1,0 +1,31 @@
+pipeline {
+  agent any
+
+  stages {
+    stage('Clone Repo') {
+      steps {
+        sh "git clone https://github.com/naveenbandari3/eShopOnWeb.git"
+        }
+      }
+    stage('Build') {
+      steps {
+        echo 'Building...'
+      }
+    }
+    stage('Test') {
+      steps {
+        echo 'Testing...'
+        snykSecurity(
+          snykInstallation:'organisation-snyk-api-token',
+          snykTokenId:'organisation-snyk-api-token',
+          // place other parameters here
+        )
+      }
+    }
+    stage('Deploy') {
+      steps {
+        echo 'Deploying...'
+      }
+    }
+  }
+}
